@@ -10,13 +10,15 @@ public class ConnectionPool {
     private static PGPoolingDataSource instance;
 
     private ConnectionPool() {
-
     }
 
     public static DataSource getInstance() {
-        if(instance == null) {
-            synchronized(ConnectionPool.class) {
-                if(instance == null) {
+
+        if (instance == null) {
+
+            synchronized (ConnectionPool.class) {
+
+                if (instance == null) {
                     instance = new PGPoolingDataSource();
                     instance.setDataSourceName("A Data Source");
                     instance.setServerName("databaseforlearn.caviatwn83le.eu-central-1.rds.amazonaws.com:5432");
@@ -31,7 +33,6 @@ public class ConnectionPool {
 
         return instance;
     }
-
 
 
 }

@@ -12,10 +12,12 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static ua.kryha.timetrack.dao.Queries.*;
 
 public class ActivityDaoJdbcImpl implements ActivityDao {
+
     final static Logger logger = Logger.getLogger(UserDaoJdbcImpl.class);
 
     private DataSource dataSource;
@@ -24,41 +26,88 @@ public class ActivityDaoJdbcImpl implements ActivityDao {
         this.dataSource = dataSource;
     }
 
+    @Override
+    public Set<Activity> activitiesByUserId(Integer id) {
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ACTIVITIES_BY_USER_ID)) {
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ActivityMapper activityMapper = new ActivityMapper();
+
+            return activityMapper.extractSetFromResultSet(resultSet);
+
+        } catch (SQLException e) {
+            logger.warn("can't get activities by UserId");
+            throw new IllegalStateException(e);
+        }
+
+    }
 
     @Override
-    public Activity getActivityByName(String name) {
+    public List<Integer> getActivitiesIdByUser(String name) {
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ACTIVITY_BY_NAME)) {
-
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_ACTIVITIES_ID_BY_USER)) {
+            preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             ActivityMapper activityMapper = new ActivityMapper();
-            Activity activity = activityMapper.extractFromResultSet(resultSet);
 
-            return activity;
+            return activityMapper.extractListOfIntFromResultSet(resultSet);
+
+
         } catch (SQLException e) {
+            logger.warn("can't get activitiesId by User");
             throw new IllegalStateException(e);
         }
     }
 
     @Override
-    public Activity find(String id) {
-        return null;
+    public Activity getActivityByName(String name) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ACTIVITY_BY_NAME)) {
+            preparedStatement.setString(1, name);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            ActivityMapper activityMapper = new ActivityMapper();
+            return activityMapper.extractFromResultSet(resultSet);
+
+        } catch (SQLException e) {
+            logger.warn("can't get activity by name");
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override
-    public void save(Activity model) {
+    public void addActivityToUser(Integer userId, Integer activityId) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_COLUMN_INTO_USER_ACTIVITIES)) {
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, activityId);
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            logger.warn("can't save user");
+            e.printStackTrace();
+        }
 
     }
 
     @Override
-    public void update(Activity model) {
+    public void deleteActivityFromUser(Integer userId, Integer activityId) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_COLUMN_FROM_USER_ACTIVITIES)) {
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, activityId);
 
-    }
-
-    @Override
-    public void delete(Integer id) {
-
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            logger.warn("can't delete activity by User");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -69,12 +118,33 @@ public class ActivityDaoJdbcImpl implements ActivityDao {
 
             ActivityMapper activityMapper = new ActivityMapper();
 
-            List<Activity> activities = activityMapper.extractListFromResultSet(resultSet);
-
-            return activities;
+            return activityMapper.extractListFromResultSet(resultSet);
 
         } catch (SQLException e) {
+            logger.warn("can't find all");
             throw new IllegalStateException(e);
         }
     }
+
+    @Override
+    public Activity find(String id) {
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public void save(Activity model) {
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public void update(Activity model) {
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public void delete(Integer id) {
+        throw new IllegalArgumentException();
+    }
+
+
 }

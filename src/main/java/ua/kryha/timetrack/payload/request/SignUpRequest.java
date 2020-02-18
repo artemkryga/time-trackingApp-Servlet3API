@@ -1,6 +1,7 @@
 package ua.kryha.timetrack.payload.request;
 
 public class SignUpRequest {
+
     private String username;
     private String password;
     private String email;

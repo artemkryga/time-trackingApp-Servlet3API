@@ -11,17 +11,20 @@ public class UserMapper implements ObjectMapper<User> {
 
     @Override
     public User extractFromResultSet(ResultSet resultSet) throws SQLException {
+
         if (resultSet.next()) {
+            Integer id = resultSet.getInt("id");
             String emaly = resultSet.getString("email");
             String username = resultSet.getString("username");
             String password = resultSet.getString("password");
-            return new User(username, emaly, password);
+
+            return new User(id , username, emaly, password);
         }
         return new User();
     }
 
     @Override
     public List<User> extractListFromResultSet(ResultSet resultSet) throws SQLException {
-        return null;
+        throw new IllegalArgumentException();
     }
 }

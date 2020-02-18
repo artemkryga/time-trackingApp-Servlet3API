@@ -2,11 +2,20 @@ package ua.kryha.timetrack.model;
 
 public class PersistenseChoice {
 
-     private Integer id;
-     private User user;
-     private Activity activity;
-     private EUserAction action;
+    private Integer id;
+    private User user;
+    private Activity activity;
+    private EUserAction action;
 
+    public PersistenseChoice(Integer id, EUserAction action, Activity activity, User user) {
+        this.id = id;
+        this.user = user;
+        this.activity = activity;
+        this.action = action;
+    }
+
+    public PersistenseChoice() {
+    }
 
     public Integer getId() {
         return id;

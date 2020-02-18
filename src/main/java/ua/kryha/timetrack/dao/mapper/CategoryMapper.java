@@ -9,11 +9,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryMapper implements ObjectMapper<Category>{
+public class CategoryMapper implements ObjectMapper<Category> {
 
     @Override
     public List<Category> extractListFromResultSet(ResultSet resultSet) throws SQLException {
+
         List<Category> list = new ArrayList<>();
+
         while (resultSet.next()) {
             String name = resultSet.getString("name");
             list.add(new Category(name));
@@ -23,6 +25,6 @@ public class CategoryMapper implements ObjectMapper<Category>{
 
     @Override
     public Category extractFromResultSet(ResultSet resultSet) throws SQLException {
-        return null;
+        throw new IllegalArgumentException();
     }
 }

@@ -22,6 +22,22 @@ public class UserDaoJdbcImpl implements UserDao {
         this.dataSource = dataSource;
     }
 
+    @Override
+    public Optional<User> findByUsername(String name) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_BY_USERNAME)) {
+            preparedStatement.setString(1, name);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            UserMapper userMapper = new UserMapper();
+            User user = userMapper.extractFromResultSet(resultSet);
+
+            return Optional.of(user);
+
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
 
     @Override
     public void save(User user) {

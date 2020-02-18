@@ -7,6 +7,7 @@ import java.util.Set;
 
 public class User {
 
+    private Integer id;
     private String username;
     private String email;
     private String password;
@@ -20,17 +21,33 @@ public class User {
 
     }
 
+    public User(Integer id, String username, String email, String password) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
     public User(String username, String email) {
         this.username = username;
         this.email = email;
     }
 
+    public User(String username) {
+        this.username = username;
+    }
+
     public User() {
     }
 
-    public User(String email) {
-        this.email = email;
+    public Integer getId() {
+        return id;
     }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
 
     public String getUsername() {
         return username;

@@ -19,36 +19,32 @@ public class UserAuthService {
     }
 
     public void signUp(SignUpRequest signUpRequest) {
+
         userDao.chekByEmail(signUpRequest.getEmail())
                 .orElseThrow(() -> new RuntimeException("User already exists"));
+
         User user = new User(
-                signUpRequest.getUsername(),
-                signUpRequest.getEmail(),
-                //TODO encoder
-                signUpRequest.getPassword()
+                       signUpRequest.getUsername(),
+                       signUpRequest.getEmail(),
+                       //TODO encoder
+                       signUpRequest.getPassword()
         );
+
         userDao.save(user);
     }
 
-    public List<User> find() {
-        return userDao.findAll();
-    }
 
-    public void signIn(SignInRequest signInRequest) {
+    public User signIn(SignInRequest signInRequest) {
         User user = userDao.findByEmail(signInRequest.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Wrong password or email"));
+
         boolean passEqual = signInRequest.getPassword().equals(user.getPassword());
+
         if (!passEqual) {
             throw new IllegalArgumentException("Wrong password or email");
         }
 
+        return user;
     }
 
-    public UserDao getUserDao() {
-        return userDao;
-    }
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
 }

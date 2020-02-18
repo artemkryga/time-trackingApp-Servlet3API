@@ -1,6 +1,7 @@
 package ua.kryha.timetrack.model;
 
 public class Activity {
+
     private Integer id;
 
     private String name;
@@ -10,6 +11,24 @@ public class Activity {
     public Activity(String name, Category category) {
         this.name = name;
         this.category = category;
+    }
+
+    public Activity() {
+    }
+
+    public Activity(Integer id, String name, Category category) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+    }
+
+    public Activity(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Activity(String name) {
+        this.name = name;
     }
 
     public Integer getId() {

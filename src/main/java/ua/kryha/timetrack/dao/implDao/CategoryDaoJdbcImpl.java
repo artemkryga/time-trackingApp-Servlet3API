@@ -34,33 +34,34 @@ public class CategoryDaoJdbcImpl implements CategoryDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             CategoryMapper categoryMapper = new CategoryMapper();
-            List<Category> categories = categoryMapper.extractListFromResultSet(resultSet);
 
-            return categories;
+            return categoryMapper.extractListFromResultSet(resultSet);
+
 
         } catch (SQLException e) {
+            logger.warn("can't find all categories");
             throw new IllegalStateException(e);
         }
     }
 
     @Override
     public Category find(String id) {
-        return null;
+        throw new IllegalStateException();
     }
 
     @Override
     public void save(Category model) {
-
+        throw new IllegalStateException();
     }
 
     @Override
     public void update(Category model) {
-
+        throw new IllegalStateException();
     }
 
     @Override
     public void delete(Integer id) {
-
+        throw new IllegalStateException();
     }
 
 

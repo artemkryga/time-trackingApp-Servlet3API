@@ -2,7 +2,7 @@ package ua.kryha.timetrack.payload.request;
 
 public class AdminRequest {
 
-    private  String nameUser;
+    private String nameUser;
 
     private String date;
 

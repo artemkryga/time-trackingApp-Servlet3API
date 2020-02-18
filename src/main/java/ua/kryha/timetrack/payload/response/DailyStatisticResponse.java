@@ -20,7 +20,6 @@ public class DailyStatisticResponse {
     }
 
 
-
     public String getTime() {
         return time;
     }

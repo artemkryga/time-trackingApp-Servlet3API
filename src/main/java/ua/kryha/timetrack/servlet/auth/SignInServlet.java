@@ -1,5 +1,6 @@
 package ua.kryha.timetrack.servlet.auth;
 
+import ua.kryha.timetrack.model.User;
 import ua.kryha.timetrack.payload.request.SignInRequest;
 import ua.kryha.timetrack.service.UserAuthService;
 
@@ -36,9 +37,13 @@ public class SignInServlet extends HttpServlet {
 
         SignInRequest signInRequest = new SignInRequest(email, password);
 
-        userAuthService.signIn(signInRequest);
+         User user = userAuthService.signIn(signInRequest);
+
+         String name = user.getUsername();
 
         HttpSession session = request.getSession();
+
+        session.setAttribute("currentUser" , name );
         session.setAttribute("user", email);
         response.sendRedirect("home");
 

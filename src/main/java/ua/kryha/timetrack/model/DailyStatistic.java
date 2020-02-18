@@ -3,16 +3,34 @@ package ua.kryha.timetrack.model;
 import java.sql.Date;
 
 public class DailyStatistic {
+
     private Integer id;
 
     private Date date;
 
     private String time;
 
-    private Long usr;
+    private Integer usr;
 
     private Activity activity;
 
+    public DailyStatistic() {
+    }
+
+    public DailyStatistic(Integer id, Date date, String time, Integer usr, Activity activity) {
+        this.id = id;
+        this.date = date;
+        this.time = time;
+        this.usr = usr;
+        this.activity = activity;
+    }
+
+    public DailyStatistic(Date date, String time, Integer usr, Activity activity) {
+        this.date = date;
+        this.time = time;
+        this.usr = usr;
+        this.activity = activity;
+    }
 
     public Integer getId() {
         return id;
@@ -38,11 +56,11 @@ public class DailyStatistic {
         this.time = time;
     }
 
-    public Long getUsr() {
+    public Integer getUsr() {
         return usr;
     }
 
-    public void setUsr(Long usr) {
+    public void setUsr(Integer usr) {
         this.usr = usr;
     }
 
