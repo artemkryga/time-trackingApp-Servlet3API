@@ -1,11 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="current" value="${param.ddlLanguage}" scope="session"/>
-<c:if test="${not empty current}">
-    <fmt:setLocale value="${current}" scope="session"/>
-</c:if>
-<fmt:setBundle basename="messages" scope="session"/>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages"/>
 
 <html>
 <head>
@@ -28,7 +25,7 @@
                 role="tab"
                 aria-controls="pills-home"
                 aria-selected="true"
-        >User Statistics</a>
+        ><fmt:message key="admin.user.statistics"/></a>
     </li>
     <li class="nav-item">
         <a
@@ -39,7 +36,7 @@
                 role="tab"
                 aria-controls="pills-profile"
                 aria-selected="false"
-        >User Choice</a>
+        ><fmt:message key="admin.user.choice"/></a>
     </li>
 </ul>
 <div class="tab-content" id="pills-tabContent">
@@ -65,31 +62,11 @@
                         type="button"
                         id="button-addon2"
                         @change="findUser()"
-                >search</button>
+                ><fmt:message key="admin.search"/></button>
             </div>
         </div>
 
-        <table class="table">
-            <tr>
-                <th>Activities</th>
-                <th>Date</th>
-                <th>Time</th>
-            </tr>
-<%--            v-for="currency in info " v-bind:key="currency.nameAct"--%>
-            <c:forEach items="${persistenses}" var="persistense">
-            <tr >
-                <td>
-                    <h5>{{currency.name}}</h5>
-                </td>
-                <td>
-                    <h5>{{currency.time}}</h5>
-                </td>
-                <td>
-                    <h5>{{currency.date}}</h5>
-                </td>
-            </tr>
-            </c:forEach>
-        </table>
+
     </div>
     <div
             class="tab-pane fade"
@@ -101,10 +78,10 @@
             <thead class="thead-dark">
             <tr>
                 <th>#</th>
-                <th>Name Activity</th>
-                <th>Action</th>
-                <th>Yes</th>
-                <th>No</th>
+                <th><fmt:message key="admin.name.activity"/></th>
+                <th><fmt:message key="admin.action"/></th>
+                <th><fmt:message key="admin.yes"/></th>
+                <th><fmt:message key="admin.no"/></th>
             </tr>
             </thead>
             <c:forEach items="${persistenses}" var="persistense">
@@ -129,7 +106,7 @@
                     <form action="${pageContext.request.contextPath}/admin?accept=1&action=${activity.action}&nameActivity=${activity.nameAct}&username=${persistense.userName}&id=${activity.id}"
 
                           method="post">
-                    <button type="submit" class="btn btn-success">Accept</button>
+                    <button type="submit" class="btn btn-success"><fmt:message key="admin.accept"/></button>
                     </form>
                 </td>
                 <td>
@@ -138,7 +115,7 @@
                     <button
                             type="submit"
                             class="btn btn-danger"
-                    >Decline</button>
+                    ><fmt:message key="admin.decline"/></button>
                     </form>
                 </td>
             </tr>

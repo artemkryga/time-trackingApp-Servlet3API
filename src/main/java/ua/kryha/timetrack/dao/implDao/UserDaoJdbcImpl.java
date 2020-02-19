@@ -48,6 +48,7 @@ public class UserDaoJdbcImpl implements UserDao {
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getEmail());
             preparedStatement.setString(3, user.getPassword());
+            preparedStatement.setString(4 , user.getRole().toString());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -55,6 +56,7 @@ public class UserDaoJdbcImpl implements UserDao {
         }
     }
 
+    //TODO boolean
     @Override
     public Optional<User> chekByEmail(String email) {
         try (Connection connection = dataSource.getConnection();

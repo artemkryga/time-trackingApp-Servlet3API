@@ -2,6 +2,7 @@ package ua.kryha.timetrack.servlet.page;
 
 import ua.kryha.timetrack.model.Activity;
 import ua.kryha.timetrack.model.User;
+import ua.kryha.timetrack.payload.UserSessionDTO;
 import ua.kryha.timetrack.payload.request.ActivityRequest;
 import ua.kryha.timetrack.payload.response.ActivityResponse;
 import ua.kryha.timetrack.payload.response.UserActivityCategResponse;
@@ -38,7 +39,11 @@ public class UserPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("currentUser");
+
+        UserSessionDTO user = (UserSessionDTO) session.getAttribute("user");
+
+        String username = user.getUsername();
+
         List<UserActivityCategResponse> userActivityCategResponses = userPageService.getAllActivityByUser(username);
         request.setAttribute("allActivities", userActivityCategResponses);
         request.setAttribute("StatUser", dailyStatisticsService.getUsersStatisticsByName(username));
@@ -50,8 +55,13 @@ public class UserPageServlet extends HttpServlet {
         String nameActivity = req.getParameter("nameActivity");
         String action = req.getParameter("action");
         HttpSession session = req.getSession();
-        String username = (String) session.getAttribute("currentUser");
+
+        UserSessionDTO user = (UserSessionDTO) session.getAttribute("user");
+
+        String username = user.getUsername();
+
         persistenceChoiсeService.save(new ActivityRequest(nameActivity, username, action));
+
         resp.sendRedirect(req.getContextPath() + "/user");
     }
 }

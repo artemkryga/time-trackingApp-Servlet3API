@@ -1,6 +1,9 @@
 package ua.kryha.timetrack.servlet.auth;
 
+import ua.kryha.timetrack.exception.UsernameNotFoundException;
+import ua.kryha.timetrack.exception.WrongParametersException;
 import ua.kryha.timetrack.model.User;
+import ua.kryha.timetrack.payload.UserSessionDTO;
 import ua.kryha.timetrack.payload.request.SignInRequest;
 import ua.kryha.timetrack.service.UserAuthService;
 
@@ -36,16 +39,25 @@ public class SignInServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         SignInRequest signInRequest = new SignInRequest(email, password);
-
-         User user = userAuthService.signIn(signInRequest);
-
-         String name = user.getUsername();
-
         HttpSession session = request.getSession();
 
-        session.setAttribute("currentUser" , name );
-        session.setAttribute("user", email);
-        response.sendRedirect("home");
+            try {
+                User user = userAuthService.signIn(signInRequest);
+                UserSessionDTO sessionUser = new UserSessionDTO(user.getUsername(),
+                        user.getEmail(),
+                        user.getRole());
+
+                session.setAttribute("user" , sessionUser);
+
+            }
+            catch (WrongParametersException e) {
+
+                session.setAttribute("error" , "Can't login");
+                session.setAttribute("type", "success fade show");
+                doGet(request , response);
+            }
+
+        response.sendRedirect(request.getContextPath() + "/profile");
 
     }
 }

@@ -1,3 +1,4 @@
+/*
 package ua.kryha.timetrack.filter;
 
 import javax.servlet.*;
@@ -7,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter("/admin")
+@WebFilter( urlPatterns = {"/api/home/*" , "/api/admin/*"} )
 public class AuthFilter implements Filter {
 
     @Override
@@ -39,3 +40,4 @@ public class AuthFilter implements Filter {
 
     }
 }
+*/

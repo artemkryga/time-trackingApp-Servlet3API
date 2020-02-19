@@ -1,11 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="current" value="${param.ddlLanguage}" scope="session"/>
-<c:if test="${not empty current}">
-    <fmt:setLocale value="${current}" scope="session"/>
-</c:if>
-<fmt:setBundle basename="messages" scope="session"/>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages"/>
 
 <html>
 <head>
@@ -22,15 +19,15 @@
 
     <table class="table" >
         <tr>
-            <th>Category</th>
-            <th>Activity</th>
-            <th>Time</th>
-            <th>Action</th>
+            <th><fmt:message key="admin.category"/></th>
+            <th><fmt:message key="admin.activity"/></th>
+            <th><fmt:message key="admin.time"/></th>
+            <th><fmt:message key="admin.admin.action"/></th>
 
         </tr>
 
         <c:forEach items="${activitiesByUserList}" var="activity">
-        <tr >
+        <tr>
             <td>
                 <h5>${activity.nameCateg}</h5>
             </td>
@@ -44,10 +41,10 @@
 
             <td>
                 <c:if test="${activity.status != 'WAIT'}">
-                <button class="btn btn-primary" type="submit">Go</button>
+                <button class="btn btn-primary" type="submit"><fmt:message key="home.go"/></button>
                 </c:if>
                 <c:if test="${activity.status == 'WAIT'}">
-                <button class="btn btn-primary" disabled type="submit">DONE</button>
+                <button class="btn btn-primary" disabled type="submit"><fmt:message key="home.done"/></button>
                 </c:if>
             </td>
            </form>

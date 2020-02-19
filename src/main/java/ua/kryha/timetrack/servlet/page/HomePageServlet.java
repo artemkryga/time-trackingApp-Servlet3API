@@ -2,6 +2,7 @@ package ua.kryha.timetrack.servlet.page;
 
 import ua.kryha.timetrack.model.Activity;
 import ua.kryha.timetrack.model.DailyStatistic;
+import ua.kryha.timetrack.payload.UserSessionDTO;
 import ua.kryha.timetrack.payload.response.ActivityResponse;
 import ua.kryha.timetrack.payload.response.DailyStatisticResponse;
 import ua.kryha.timetrack.service.DailyStatisticsService;
@@ -41,11 +42,13 @@ public class HomePageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+        UserSessionDTO user = (UserSessionDTO) session.getAttribute("user");
         List<ActivityResponse> activitiesByUserList = homePageService.getUserActivitiesResponseByName(
-                (String)session.getAttribute("user")
+                user.getUsername()
         );
 
         request.setAttribute("activitiesByUserList" , activitiesByUserList );
+        System.out.println(user.getRole().toString());
 
         request.getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
 

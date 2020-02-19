@@ -11,6 +11,7 @@ public class User {
     private String username;
     private String email;
     private String password;
+    private ERole role;
     private Set<Activity> activities = new HashSet<>();
     private List<DailyStatistic> dailyStatistics = new ArrayList<>();
 
@@ -19,6 +20,21 @@ public class User {
         this.email = email;
         this.password = password;
 
+    }
+
+    public User(Integer id, String username, String email, String password, ERole role) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
+    public User(String username, String email, String password, ERole role) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
     }
 
     public User(Integer id, String username, String email, String password) {
@@ -87,5 +103,13 @@ public class User {
 
     public void setDailyStatistics(List<DailyStatistic> dailyStatistics) {
         this.dailyStatistics = dailyStatistics;
+    }
+
+    public ERole getRole() {
+        return role;
+    }
+
+    public void setRole(ERole role) {
+        this.role = role;
     }
 }

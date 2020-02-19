@@ -1,5 +1,6 @@
 package ua.kryha.timetrack.dao.mapper;
 
+import ua.kryha.timetrack.model.ERole;
 import ua.kryha.timetrack.model.User;
 
 import java.sql.ResultSet;
@@ -17,8 +18,9 @@ public class UserMapper implements ObjectMapper<User> {
             String emaly = resultSet.getString("email");
             String username = resultSet.getString("username");
             String password = resultSet.getString("password");
+            String role = resultSet.getString("role");
 
-            return new User(id , username, emaly, password);
+            return new User(id , username, emaly, password, ERole.valueOf(role));
         }
         return new User();
     }

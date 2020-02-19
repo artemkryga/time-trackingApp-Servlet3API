@@ -8,4 +8,9 @@
     <listener-class>ua.kryha.timetrack.context.UsersServiceListener</listener-class>
   </listener>
 
+  <error-page>
+    <error-code>404</error-code>
+    <location>/errors/error404.jsp</location>
+  </error-page>
+
 </web-app>

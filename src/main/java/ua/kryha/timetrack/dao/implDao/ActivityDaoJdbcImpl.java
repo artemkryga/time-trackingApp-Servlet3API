@@ -11,6 +11,7 @@ import ua.kryha.timetrack.model.User;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -128,6 +129,7 @@ public class ActivityDaoJdbcImpl implements ActivityDao {
 
     @Override
     public Activity find(String id) {
+
         throw new IllegalArgumentException();
     }
 

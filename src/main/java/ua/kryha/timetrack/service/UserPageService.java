@@ -119,7 +119,9 @@ public class UserPageService {
 
         Integer userId = user.getId();
         Integer activityId = activity.getId();
+
         activityService.deleteActivityFromUser(userId, activityId);
+
         persistenceChoiceService.deletePerChoice(adminActionRequest.getId());
 
     }
